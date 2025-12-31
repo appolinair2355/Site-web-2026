@@ -1,0 +1,26 @@
+{
+  "name": "mont-sion-boutique",
+  "version": "1.0.0",
+  "description": "Boutique de luxe Mont Sion - Site e-commerce élégant",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "boutique",
+    "e-commerce",
+    "luxury",
+    "fashion",
+    "mont-sion"
+  ],
+  "author": "sossou Kouamé appolinaire développeur web",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mont Sion - Boutique de Luxe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-bg {
+            background: linear-gradient(rgba(26, 35, 126, 0.7), rgba(255, 215, 0, 0.3)), url('./resources/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .typing-effect {
+            overflow: hidden;
+            border-right: 3px solid #FFD700;
+            white-space: nowrap;
+            animation: typing 3s steps(20, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #FFD700; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #1a237e, #3949ab);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.3);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .progress-bar {
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-['Inter']">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="./resources/logo.png" alt="Mont Sion Logo" class="h-10 w-10">
+                    <h1 class="text-2xl font-['Playfair_Display'] font-bold gradient-text">Mont Sion</h1>
+                </div>
+                <div class="hidden md:block">
+                    <p class="text-sm text-gray-600">Boutique de Luxe</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-yellow-500/30"></div>
+        <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+            <div class="reveal">
+                <h1 class="text-6xl md:text-8xl font-['Playfair_Display'] font-bold mb-6">
+                    <span class="typing-effect inline-block">Mont Sion</span>
+                </h1>
+            </div>
+            <div class="reveal">
+                <p class="text-xl md:text-2xl mb-4 font-light">Bienvenue dans notre univers de luxe</p>
+                <p class="text-lg mb-12 opacity-90">Découvrez nos collections exclusives pour toute la famille</p>
+            </div>
+            <div class="reveal flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button id="categoriesBtn" class="btn-primary text-white px-12 py-4 rounded-full text-lg font-['Montserrat'] font-semibold hover:scale-105 transition-all duration-300 shadow-2xl">
+                    <i class="fas fa-store mr-2"></i>
+                    Explorer les Catégories
+                </button>
+                <button id="adminBtn" class="btn-secondary text-white px-12 py-4 rounded-full text-lg font-['Montserrat'] font-semibold hover:scale-105 transition-all duration-300 shadow-2xl">
+                    <i class="fas fa-lock mr-2"></i>
+                    Espace Administrateur
+                </button>
+            </div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="absolute top-20 left-10 floating">
+            <i class="fas fa-gem text-4xl text-yellow-400 opacity-60"></i>
+        </div>
+        <div class="absolute bottom-32 right-16 floating" style="animation-delay: 1s;">
+            <i class="fas fa-crown text-3xl text-yellow-300 opacity-50"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-['Playfair_Display'] font-bold text-gray-900 mb-4">Pourquoi choisir Mont Sion ?</h2>
+                <p class="text-xl text-gray-600">La qualité et le luxe à portée de main</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="reveal text-center p-8 bg-gradient-to-br from-yellow-50 to-blue-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shipping-fast text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-['Montserrat'] font-semibold mb-4">Livraison Rapide</h3>
+                    <p class="text-gray-600">Livraison express dans toute la région avec suivi en temps réel</p>
+                </div>
+                <div class="reveal text-center p-8 bg-gradient-to-br from-blue-50 to-yellow-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-gem text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-['Montserrat'] font-semibold mb-4">Qualité Premium</h3>
+                    <p class="text-gray-600">Des produits de luxe soigneusement sélectionnés pour leur excellence</p>
+                </div>
+                <div class="reveal text-center p-8 bg-gradient-to-br from-yellow-50 to-blue-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-['Montserrat'] font-semibold mb-4">Service Client</h3>
+                    <p class="text-gray-600">Support client disponible 24/7 pour toutes vos questions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl">
+            <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-spinner fa-spin text-white text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-['Montserrat'] font-semibold mb-4">Chargement...</h3>
+            <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                <div id="progressBar" class="progress-bar bg-gradient-to-r from-yellow-400 to-yellow-600 h-3 rounded-full"></div>
+            </div>
+            <p id="progressText" class="text-gray-600">Préparation de votre expérience</p>
+        </div>
+    </div>
+
+    <!-- Admin Password Modal -->
+    <div id="adminModal" class="modal">
+        <div class="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-lock text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-['Montserrat'] font-semibold">Accès Administrateur</h3>
+            </div>
+            <form id="adminForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Mot de passe</label>
+                    <input type="password" id="adminPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Entrez le mot de passe" required>
+                </div>
+                <div class="flex gap-4">
+                    <button type="button" id="cancelAdmin" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-400 transition-colors">
+                        Annuler
+                    </button>
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-800 transition-all">
+                        Connexion
+                    </button>
+                </div>
+            </form>
+            <p id="errorMessage" class="text-red-500 text-sm mt-4 text-center hidden">Mot de passe incorrect</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <img src="./resources/logo.png" alt="Mont Sion Logo" class="h-16 w-16 mx-auto mb-4">
+                <h3 class="text-2xl font-['Playfair_Display'] font-bold mb-2">Mont Sion</h3>
+                <p class="text-blue-200">Boutique de Luxe</p>
+            </div>
+            <div class="border-t border-blue-700 pt-8">
+                <p class="text-blue-200 text-sm">
+                    © 2024 Mont Sion Boutique. Développé avec passion par 
+                    <span class="font-semibold text-yellow-400">sossou Kouamé appolinaire développeur web</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

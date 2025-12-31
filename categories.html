@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégories - Mont Sion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+        
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .product-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .progress-container {
+            width: 300px;
+            max-width: 80%;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .whatsapp-btn {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-['Inter']">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="text-center text-white">
+            <div class="mb-8">
+                <img src="./resources/logo.png" alt="Mont Sion Logo" class="h-20 w-20 mx-auto mb-4 opacity-90">
+                <h1 class="text-3xl font-['Playfair_Display'] font-bold mb-2">Mont Sion</h1>
+                <p class="text-blue-200">Chargement des collections...</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="text-sm opacity-80">Initialisation...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="./resources/logo.png" alt="Mont Sion Logo" class="h-10 w-10">
+                    <h1 class="text-2xl font-['Playfair_Display'] font-bold gradient-text">Mont Sion</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-home mr-1"></i> Accueil
+                    </a>
+                    <span class="text-gray-300">|</span>
+                    <span class="text-blue-600 font-semibold">
+                        <i class="fas fa-th-large mr-1"></i> Catégories
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Navigation -->
+    <section class="bg-gradient-to-r from-blue-50 to-yellow-50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-['Playfair_Display'] font-bold text-gray-900 mb-4">Nos Collections</h2>
+                <p class="text-xl text-gray-600">Découvrez nos articles de luxe par catégorie</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button id="allBtn" class="category-btn active px-8 py-3 rounded-full font-['Montserrat'] font-semibold text-gray-700 bg-white shadow-md hover:shadow-lg">
+                    <i class="fas fa-th mr-2"></i>Tous
+                </button>
+                <button id="hommeBtn" class="category-btn px-8 py-3 rounded-full font-['Montserrat'] font-semibold text-gray-700 bg-white shadow-md hover:shadow-lg">
+                    <i class="fas fa-male mr-2"></i>Homme
+                </button>
+                <button id="femmeBtn" class="category-btn px-8 py-3 rounded-full font-['Montserrat'] font-semibold text-gray-700 bg-white shadow-md hover:shadow-lg">
+                    <i class="fas fa-female mr-2"></i>Femme
+                </button>
+                <button id="enfantBtn" class="category-btn px-8 py-3 rounded-full font-['Montserrat'] font-semibold text-gray-700 bg-white shadow-md hover:shadow-lg">
+                    <i class="fas fa-child mr-2"></i>Enfant
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-16 hidden">
+                <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-inbox text-gray-400 text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-['Montserrat'] font-semibold text-gray-700 mb-2">Aucun article trouvé</h3>
+                <p class="text-gray-500">Commencez par ajouter des articles dans l'espace administrateur</p>
+                <a href="admin.html" class="btn-primary text-white px-8 py-3 rounded-full inline-block mt-6 font-['Montserrat'] font-semibold">
+                    <i class="fas fa-plus mr-2"></i>Ajouter un article
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 id="modalTitle" class="text-2xl font-['Playfair_Display'] font-bold text-gray-900"></h3>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <img id="modalImage" src="" alt="" class="w-full h-64 object-cover rounded-lg">
+                    </div>
+                    <div>
+                        <div class="mb-4">
+                            <span id="modalCategory" class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mb-2"></span>
+                            <p id="modalPrice" class="text-3xl font-['Montserrat'] font-bold gradient-text mb-4"></p>
+                        </div>
+                        <div class="space-y-4">
+                            <button id="orderBtn" class="whatsapp-btn text-white w-full py-3 rounded-lg font-['Montserrat'] font-semibold">
+                                <i class="fab fa-whatsapp mr-2"></i>Commander sur WhatsApp
+                            </button>
+                            <a href="admin.html" class="block text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-['Montserrat'] font-semibold hover:bg-gray-200 transition-colors">
+                                <i class="fas fa-edit mr-2"></i>Modifier l'article
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <img src="./resources/logo.png" alt="Mont Sion Logo" class="h-16 w-16 mx-auto mb-4">
+                <h3 class="text-2xl font-['Playfair_Display'] font-bold mb-2">Mont Sion</h3>
+                <p class="text-blue-200">Boutique de Luxe</p>
+            </div>
+            <div class="border-t border-blue-700 pt-8">
+                <p class="text-blue-200 text-sm">
+                    © 2024 Mont Sion Boutique. Développé avec passion par 
+                    <span class="font-semibold text-yellow-400">sossou Kouamé appolinaire développeur web</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

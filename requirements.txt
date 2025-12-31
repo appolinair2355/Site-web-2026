@@ -1,0 +1,3 @@
+# Mont Sion Boutique - Python Dependencies
+# This file is intentionally empty as we use only Python standard library
+# Render.com requires this file for Python deployment

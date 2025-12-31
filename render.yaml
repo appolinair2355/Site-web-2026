@@ -1,0 +1,15 @@
+# Render.com configuration for Mont Sion Boutique
+# Author: sossou Kouamé appolinaire développeur web
+
+services:
+  - type: web
+    name: mont-sion-boutique
+    env: python
+    buildCommand: ""
+    startCommand: "python3 server.py"
+    envVars:
+      - key: PORT
+        value: 10000
+    healthCheckPath: "/"
+    autoDeploy: true
+    branch: main
